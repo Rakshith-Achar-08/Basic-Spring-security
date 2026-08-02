@@ -74,7 +74,13 @@ public class Config {
     public AuthenticationProvider authenticationProvider(){
 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+
+//        the below line is used as we are not using any encryption. whatever the data/password that are stored in
+//        the DB will directly fetch and goes for authentication
+//        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+//
+//
+//
 //        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
