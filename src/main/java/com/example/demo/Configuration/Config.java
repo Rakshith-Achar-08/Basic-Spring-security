@@ -34,7 +34,7 @@ public class Config {
         //building by using Lamda
         httpSecurity.csrf(customize -> customize.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("register",  "login")
+                        .requestMatchers("/register",  "/login")
                         .permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())

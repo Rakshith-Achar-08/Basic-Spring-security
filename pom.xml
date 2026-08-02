@@ -89,6 +89,13 @@
 			<version>42.7.12</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!--this is dependency for OAuth -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-oauth2-client-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
