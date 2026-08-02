@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.security.autoconfigure.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
@@ -31,7 +33,10 @@ public class Config {
 
         //building by using Lamda
         httpSecurity.csrf(customize -> customize.disable())
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("register",  "login")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
@@ -71,6 +76,8 @@ public class Config {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+
     @Bean
     public AuthenticationProvider authenticationProvider(){
 
@@ -90,6 +97,17 @@ public class Config {
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 //        provider.setUserDetailsService(userDetailsService);
         return provider;
+    }
+
+    //**********Now this lines of code is to manage and generate the JWT token easy access of data**************
+
+    //we are creating and setUp the JWT bean to
+
+    //we are using this for to verify during login
+    //(Autowire it to RegisterService)
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
 }
