@@ -16,7 +16,13 @@ public class RegisterService {
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public Users newRegister(Users users){
+        //this line bycrypt the cipher text and store it in db
+        users.setPassword(bCryptPasswordEncoder.encode(users.getPassword()));
         return userRepo.save(users);
     }
+
+//    public Users deleteUser(Users users){
+//        return userRepo.deleteById(users.getId());
+//    }
 
 }

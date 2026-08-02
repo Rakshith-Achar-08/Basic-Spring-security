@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -77,10 +78,16 @@ public class Config {
 
 //        the below line is used as we are not using any encryption. whatever the data/password that are stored in
 //        the DB will directly fetch and goes for authentication
-//        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
-//
-//
-//
+
+
+        //this line will authorise by taking the cipher text that has stored in db
+        //coverts into plain text to verify.
+
+        //the number 12 is the number of iteration that has to go to convert
+        //plain text to cipher
+
+        // remember the 'new BCryptPasswordEncoder(12) shpuld be same in both config and service.
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 //        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
