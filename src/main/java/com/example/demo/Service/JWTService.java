@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 public class JWTService {
 
     public String generateToken() {
+        return "null";
     }
 }
